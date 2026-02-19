@@ -12,22 +12,32 @@
 > 全151種類のドット絵を自作した圧倒的な作業量や自身の集客力を評価していただきました。
 
 ## デモ
-https://github.com/user-attachments/assets/0c8727b9-0008-434e-8dc1-e7af4fab1b9f
+https://github.com/user-attachments/assets/3b13e7e1-33ce-44a8-84c8-7f8e15393c43
 > 一覧画面の映像です
+
+<br>
 
 https://github.com/user-attachments/assets/5e182657-f0b6-4db5-b53d-58e1dddad46d
 > タイプごとに絞り込んで表示している映像です（絞り込まれている様子が分かりやすいようにズームを80%にして表示しています）
 
+<br>
+
 https://github.com/user-attachments/assets/780d8f69-791e-4f09-a48f-a2380bb7bb5a
 > 名前で検索している映像です
+
+<br>
 
 https://github.com/user-attachments/assets/afbb3d75-8d59-4839-b064-11be50d52ed5
 > トップ画面から検索している映像です  
 > **こだわり**：画面遷移時にオリジナルのローディングを実装しました
 
+<br>
+
 https://github.com/user-attachments/assets/f74bdb29-cea2-438d-9ce3-7b6d8d33e0cb
 > ハンバーガーメニューです  
 > **こだわり**：メニュー選択時に黒い三角が表示するように実装しました。ゲーム画面を彷彿とさせるデザインにすることによって、ユーザーがポケモン図鑑を使っているという没入感を高めています。
+
+<br>
 
 https://github.com/user-attachments/assets/64ba5559-3464-457a-9b67-da5826d85d88
 > 図鑑の詳細を開いている映像です  
