@@ -16,7 +16,7 @@ function List() {
 
   // ▼ 検索用とタイプ用のState（表示データはこれらを元に自動算出します）
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedType, setSelectedType] = useState(null);
+  const [selectedTypes, setSelectedTypes] = useState([]);
 
   const [modalData, setModalData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -72,22 +72,32 @@ function List() {
   // ▼ すべてのPokemonデータから、現在の「検索文字」と「選択タイプ」に合うものだけを絞り込む
   const filteredData = useMemo(() => {
     return allPokemonData.filter(p => {
-      const matchType = selectedType ? p.types.includes(selectedType) : true;
+      // 選択されているすべてのタイプを持っているか（AND検索）
+      const matchType = selectedTypes.length > 0 
+        ? selectedTypes.every(t => p.types.includes(t))
+        : true;
       const matchName = searchTerm
         ? normalizeString(p.name).includes(normalizeString(searchTerm))
         : true;
       return matchType && matchName;
     });
-  }, [allPokemonData, selectedType, searchTerm]);
+  }, [allPokemonData, selectedTypes, searchTerm]);
 
-  // タイプフィルター
+  // タイプフィルター (トグル & 最大2つまで保持)
   const handleTypeClick = (type) => {
-    setSelectedType(type);
+    setSelectedTypes(prev => {
+      if (prev.includes(type)) {
+        // すでに選択されていれば解除
+        return prev.filter(t => t !== type);
+      }
+      // 新規追加（3つ目が選ばれた場合は一番古いものを押し出す）
+      return [...prev, type].slice(-2);
+    });
   };
 
   // クリア処理
   const handleClear = () => {
-    setSelectedType(null);
+    setSelectedTypes([]);
     setSearchTerm("");
   };
 
@@ -122,7 +132,7 @@ function List() {
             {TYPE_LIST.map((type, index) => (
               <React.Fragment key={type}>
                 <button
-                  className={selectedType === type ? 'select-button' : ''}
+                  className={selectedTypes.includes(type) ? 'select-button' : ''}
                   onClick={() => handleTypeClick(type)}
                 >
                   {type}
