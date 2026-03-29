@@ -1,0 +1,18 @@
+{
+  "name": "pokemon-backend",
+  "version": "1.0.0",
+  "description": "API Backend for Pokemon Portfolio",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "seed": "node seed.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "pg": "^8.11.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
