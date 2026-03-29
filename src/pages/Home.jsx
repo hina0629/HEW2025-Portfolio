@@ -50,7 +50,7 @@ function Home() {
                 id={pokemon?.id} 
                 name={pokemon?.name} 
                 isRandom={true} 
-                onClick={() => navigate(`/list?name=${pokemon?.name}`)}
+                onClick={() => navigate(`/list?name=${pokemon?.name}&open=true`)}
               />
             ))}
           </div>

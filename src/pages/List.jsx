@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import PokemonCard from '../components/PokemonCard';
 import PokemonModal from '../components/PokemonModal';
@@ -22,8 +22,9 @@ function List() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
-  // 全ポケモンのデータを取得
+  // 1. 全ポケモンのデータを初回マウント時のみ取得
   useEffect(() => {
     const loadAllPokemon = async () => {
       try {
@@ -44,19 +45,40 @@ function List() {
         });
 
         setAllPokemonData(results);
-
-        // URLパラメータの確認（トップページから来た時のため）
-        const params = new URLSearchParams(location.search);
-        const keyword = params.get("name") || params.get("search");
-        if (keyword) {
-          setSearchTerm(keyword);
-        }
       } catch (error) {
         console.error("ポケモンの取得に失敗しました:", error);
       }
     };
     loadAllPokemon();
-  }, [location.search]);
+  }, []); // 空配列で初回のみ実行
+
+  // 2. URLパラメータの監視と処理（トップページから来た時や戻るボタン対応用）
+  useEffect(() => {
+    if (allPokemonData.length === 0) return; // データ取得前はスキップ
+
+    const params = new URLSearchParams(location.search);
+    const keyword = params.get("name") || params.get("search");
+    const shouldOpen = params.get("open") === "true";
+
+    if (keyword) {
+      setSearchTerm(keyword);
+
+      if (shouldOpen) {
+        // 対象のポケモンを探して自動でモーダルを開く
+        const targetPokemon = allPokemonData.find(p => p.name === keyword);
+        if (targetPokemon) {
+          setModalData(targetPokemon);
+          setIsModalOpen(true);
+        }
+
+        // リロードや「戻る」で再度開かないよう、URLから open=true を削除（履歴は残さない replace）
+        params.delete("open");
+        navigate(`/list?${params.toString()}`, { replace: true });
+      }
+    } else {
+      setSearchTerm("");
+    }
+  }, [location.search, allPokemonData, navigate]);
 
   // ▼ 大文字小文字の統一と、ひらがなをカタカナに変換する関数
   const normalizeString = (str) => {
