@@ -54,10 +54,10 @@ https://github.com/user-attachments/assets/64ba5559-3464-457a-9b67-da5826d85d88
   </tr>
   <tr>
     <td align="center">
-      <img src="img/025.png" width="300">
+      <img src="public/img/025.png" width="300">
     </td>
     <td align="center">
-      <img src="img/025gif.png" width="300">
+      <img src="public/img/025gif.png" width="300">
     </td>
   </tr>
 </table>
